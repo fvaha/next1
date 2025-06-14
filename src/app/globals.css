@@ -1,26 +1,104 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ---------------------------------------------------------- */
+/* 1. Global reset & typography                               */
+/* ---------------------------------------------------------- */
+html,
+body {
+  margin: 0; /* remove default gap             */
+  overflow-x: hidden; /* block horizontal scroll        */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-inter), Inter, system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ---------------------------------------------------------- */
+/* 2. Full-bleed helper                                       */
+/* ---------------------------------------------------------- */
+.full-bleed {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* dark-mode page background */
+html.dark,
+html.dark body {
+  background-color: #000;
+}
+
+/* ---------------------------------------------------------- */
+/* 3. Default border & focus colour (TerraCrypt gold)         */
+/* ---------------------------------------------------------- */
+:where(*, *::before, *::after) {
+  border-color: #d4af37;
+}
+
+:focus-visible {
+  outline: 2px solid #d4af37;
+  outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------- */
+/* 4. Scrollbar styling                                       */
+/* ---------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 10px;
+  background: #1a1a1a;
+}
+::-webkit-scrollbar-thumb {
+  background: #ffe066;
+  border-radius: 6px;
+}
+
+/* ---------------------------------------------------------- */
+/* 5. Card shadow utility                                     */
+/* ---------------------------------------------------------- */
+.card-shadow {
+  box-shadow: 0 2px 16px rgb(255 224 102 / 7%);
+  border-radius: 16px;
+}
+
+/* ---------------------------------------------------------- */
+/* 6. Fade-in animation helper                                */
+/* ---------------------------------------------------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease;
+}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ---------------------------------------------------------- */
+/* 7. Reusable button style                                   */
+/* ---------------------------------------------------------- */
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background-color: #d4af37;
+    color: black;
+  }
+  .btn:hover {
+    background-color: #b38b2c;
+  }
 }
